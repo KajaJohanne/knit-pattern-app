@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { GridCanvas } from "../components/GridCanvas/GridCanvas";
 import type { KnittingMode } from "../types/pattern";
-import { ColorPicker } from "../components/ColorPicker/ColorPicker";
 
 export function NewPatternPage() {
   const [name, setName] = useState("");
@@ -81,9 +80,13 @@ export function NewPatternPage() {
 
   return (
     <div>
-        <h1>{patternConfig.name}</h1>
+      <h1>{patternConfig.name}</h1>
+      <p>
+        {patternConfig.knittingMode === "flat"
+          ? "Strikkes frem og tilbake"
+          : "Strikkes rundt"}
+      </p>
       <GridCanvas rows={patternConfig.rows} columns={patternConfig.columns} />
-      
     </div>
   );
 }
