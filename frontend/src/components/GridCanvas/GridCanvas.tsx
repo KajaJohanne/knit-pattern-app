@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import type { Cell } from "../../types/pattern";
 import "./GridCanvas.css";
+import { ColorPicker } from "../ColorPicker/ColorPicker";
 
 type GridCanvasProps = {
   rows: number;
@@ -19,28 +20,6 @@ export function GridCanvas({ rows, columns }: GridCanvasProps) {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const canvasRef = useRef(null);
 
-  const colors = [
-    "#ff6b6b",
-    "#ffd93d",
-    "#6bcb77",
-    "#4d96ff",
-    "#ff6bff",
-    "#ff9f43",
-    "#00d2d3",
-    "#f368e0",
-    "#54a0ff",
-    "#5f27cd",
-    "#ff4757",
-    "#2ed573",
-    "#1e90ff",
-    "#ff6348",
-    "#a29bfe",
-    "#ffffff",
-    "#2d3436",
-    "#fd79a8",
-    "#00b894",
-    "#0984e3",
-  ];
 
   function createEmptyGrid(rows: number, columns: number): Cell[][] {
     return Array(rows)
@@ -79,6 +58,7 @@ export function GridCanvas({ rows, columns }: GridCanvasProps) {
       <p>Tegn i vei!</p>
 
       <button onClick={handleClearGrid}>Slett innhold</button>
+      <ColorPicker selectedColor={selectedColor} onSelectColor={setSelectedColor} />
 
       <div className="pixelCanvas">
         {grid.map((row, rowIndex) => (
