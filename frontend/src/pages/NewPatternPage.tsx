@@ -4,8 +4,8 @@ import type { KnittingMode } from "../types/pattern";
 
 export function NewPatternPage() {
   const [name, setName] = useState("");
-  const [rows, setRows] = useState(1);
-  const [columns, setColums] = useState(1);
+  const [rows, setRows] = useState("1");
+  const [columns, setColums] = useState("1");
   const [knittingMode, setKnittingMode] = useState<KnittingMode>("flat");
 
   const [patternConfig, setPatternConfig] = useState<{
@@ -17,7 +17,12 @@ export function NewPatternPage() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setPatternConfig({ name, rows, columns, knittingMode });
+    setPatternConfig({
+      name,
+      rows: Number(rows),
+      columns: Number(columns),
+      knittingMode,
+    });
   }
 
   if (patternConfig === null) {
@@ -44,7 +49,7 @@ export function NewPatternPage() {
               min={1}
               max={200}
               value={rows}
-              onChange={(e) => setRows(Number(e.target.value))}
+              onChange={(e) => setRows(e.target.value)}
             />
           </div>
 
@@ -56,7 +61,7 @@ export function NewPatternPage() {
               min={1}
               max={200}
               value={columns}
-              onChange={(e) => setColums(Number(e.target.value))}
+              onChange={(e) => setColums(e.target.value)}
             />
           </div>
 
