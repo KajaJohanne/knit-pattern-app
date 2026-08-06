@@ -23,3 +23,8 @@ export async function getPatterns() {
   const response = await axios.get(`${API_URL}/patterns`);
   return response.data;
 }
+
+export async function getPatternById(id: string) {
+    const response = await axios.get(`${API_URL}/patterns/${id}`); 
+    return response.data; 
+}
