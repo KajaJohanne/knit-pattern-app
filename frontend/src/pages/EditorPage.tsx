@@ -40,6 +40,7 @@ export function EditorPage() {
         columns={pattern.columns}
         name={pattern.name}
         knittingMode={pattern.knittingMode}
+        initialGrid={pattern.grid}
       />
     </div>
   );
