@@ -26,7 +26,11 @@ export function HomePage() {
       {isLoading && <p>Laster..</p>}
 
       {!isLoading &&
-        patterns.map((pattern) => <p key={pattern.id}>{pattern.name}</p>)}
+        patterns.map((pattern) => (
+          <Link key={pattern.id} to={`/pattern/${pattern.id}`}>
+            <p>{pattern.name}</p>
+          </Link>
+        ))}
     </div>
   );
 }
