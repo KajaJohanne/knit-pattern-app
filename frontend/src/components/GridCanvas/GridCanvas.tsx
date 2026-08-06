@@ -9,6 +9,7 @@ type GridCanvasProps = {
   columns: number;
   name: string;
   knittingMode: KnittingMode;
+  initialGrid?: Cell[][];
 };
 
 export function GridCanvas({
@@ -16,9 +17,10 @@ export function GridCanvas({
   columns,
   name,
   knittingMode,
+  initialGrid,
 }: GridCanvasProps) {
-  const [grid, setGrid] = useState<Cell[][]>(() =>
-    createEmptyGrid(rows, columns),
+  const [grid, setGrid] = useState<Cell[][]>(
+    () => initialGrid ?? createEmptyGrid(rows, columns),
   );
 
   const [selectedColor, setSelectedColor] = useState("#ff6b6b");
