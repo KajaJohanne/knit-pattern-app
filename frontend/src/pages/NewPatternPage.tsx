@@ -91,7 +91,12 @@ export function NewPatternPage() {
           ? "Strikkes frem og tilbake"
           : "Strikkes rundt"}
       </p>
-      <GridCanvas rows={patternConfig.rows} columns={patternConfig.columns} />
+      <GridCanvas
+        rows={patternConfig.rows}
+        columns={patternConfig.columns}
+        name={patternConfig.name}
+        knittingMode={patternConfig.knittingMode}
+      />
     </div>
   );
 }

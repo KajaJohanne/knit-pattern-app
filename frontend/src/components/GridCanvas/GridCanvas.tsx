@@ -1,25 +1,34 @@
 import { useRef, useState } from "react";
-import type { Cell } from "../../types/pattern";
+import type { Cell, KnittingMode } from "../../types/pattern";
 import "./GridCanvas.css";
 import { ColorPicker } from "../ColorPicker/ColorPicker";
+import { savePattern } from "../../api/patterns";
 
 type GridCanvasProps = {
   rows: number;
   columns: number;
+  name: string;
+  knittingMode: KnittingMode;
 };
 
-export function GridCanvas({ rows, columns }: GridCanvasProps) {
+export function GridCanvas({
+  rows,
+  columns,
+  name,
+  knittingMode,
+}: GridCanvasProps) {
   const [grid, setGrid] = useState<Cell[][]>(() =>
     createEmptyGrid(rows, columns),
   );
 
   const [selectedColor, setSelectedColor] = useState("#ff6b6b");
+  const [isSaving, setIsSaving] = useState(false);
+
   const [isDrawing, setIsDrawing] = useState(false);
   const [tool, setTool] = useState("pen");
   const [history, setHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const canvasRef = useRef(null);
-
 
   function createEmptyGrid(rows: number, columns: number): Cell[][] {
     return Array(rows)
@@ -53,12 +62,38 @@ export function GridCanvas({ rows, columns }: GridCanvasProps) {
     setGrid(newGrid);
   }
 
+  async function handleSave() {
+    setIsSaving(true);
+
+    try {
+      await savePattern({
+        name,
+        rows,
+        columns,
+        grid,
+        knittedRows: Array(rows).fill(false),
+        knittingMode,
+      });
+      alert("Yay! Mønsteret er lagret:)");
+    } catch (error) {
+      alert("Oida, noe gikk galt under lagring");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
   return (
     <div>
       <p>Tegn i vei!</p>
 
       <button onClick={handleClearGrid}>Slett innhold</button>
-      <ColorPicker selectedColor={selectedColor} onSelectColor={setSelectedColor} />
+      <button onClick={handleSave} disabled={isSaving}>
+        {isSaving ? "Lagrer..." : "Lagre mønster"}
+      </button>
+      <ColorPicker
+        selectedColor={selectedColor}
+        onSelectColor={setSelectedColor}
+      />
 
       <div className="pixelCanvas">
         {grid.map((row, rowIndex) => (
