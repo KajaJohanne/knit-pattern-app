@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import type { Cell, KnittingMode } from "../../types/pattern";
 import "./GridCanvas.css";
 import { ColorPicker } from "../ColorPicker/ColorPicker";
-import { savePattern } from "../../api/patterns";
+import { savePattern, updatePatternById } from "../../api/patterns";
 
 type GridCanvasProps = {
   rows: number;
@@ -10,6 +10,7 @@ type GridCanvasProps = {
   name: string;
   knittingMode: KnittingMode;
   initialGrid?: Cell[][];
+  patternId?: number; // Hvis denne finnes så redigeres eksisterende mønster 
 };
 
 export function GridCanvas({
@@ -18,6 +19,7 @@ export function GridCanvas({
   name,
   knittingMode,
   initialGrid,
+  patternId,
 }: GridCanvasProps) {
   const [grid, setGrid] = useState<Cell[][]>(
     () => initialGrid ?? createEmptyGrid(rows, columns),
@@ -68,6 +70,9 @@ export function GridCanvas({
     setIsSaving(true);
 
     try {
+      if (patternId !== undefined) {
+        await updatePatternById(patternId, { name, rows, columns, grid, knittedRows: Array(rows).fill(false), knittingMode});
+      } else {
       await savePattern({
         name,
         rows,
@@ -76,6 +81,7 @@ export function GridCanvas({
         knittedRows: Array(rows).fill(false),
         knittingMode,
       });
+    }
       alert("Yay! Mønsteret er lagret:)");
     } catch (error) {
       alert("Oida, noe gikk galt under lagring");

@@ -33,3 +33,9 @@ export async function deletePatternById(id: number) {
   const response = await axios.delete(`${API_URL}/patterns/${id}`);
   return response.data;
 }
+
+export async function updatePatternById(id: number, pattern: NewPatternData) {
+    const response = await axios.put(`${API_URL}/patterns/${id}`, pattern); 
+    return response.data; 
+}
+

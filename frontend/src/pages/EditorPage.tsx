@@ -6,19 +6,21 @@ import { GridCanvas } from "../components/GridCanvas/GridCanvas";
 
 export function EditorPage() {
   const { id } = useParams();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const [pattern, setPattern] = useState<Pattern | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   async function handleDeletePattern(patternId: number) {
-    const confirmed = window.confirm("Er du sikker på at du vil slette mønsteret? Det kan ikke gjøres om.");
+    const confirmed = window.confirm(
+      "Er du sikker på at du vil slette mønsteret? Det kan ikke gjøres om.",
+    );
 
     if (!confirmed) {
-      return; 
+      return;
     }
 
-    await deletePatternById(patternId); 
+    await deletePatternById(patternId);
     navigate("/");
   }
 
@@ -53,8 +55,11 @@ export function EditorPage() {
         name={pattern.name}
         knittingMode={pattern.knittingMode}
         initialGrid={pattern.grid}
+        patternId={pattern.id}
       />
-      <button onClick={() => handleDeletePattern(pattern.id)}>Slett mønster</button>
+      <button onClick={() => handleDeletePattern(pattern.id)}>
+        Slett mønster
+      </button>
     </div>
   );
 }
