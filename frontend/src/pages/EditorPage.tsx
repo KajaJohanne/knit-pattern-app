@@ -1,14 +1,26 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getPatternById } from "../api/patterns";
+import { useNavigate, useParams } from "react-router-dom";
+import { getPatternById, deletePatternById } from "../api/patterns";
 import type { Pattern } from "../types/pattern";
 import { GridCanvas } from "../components/GridCanvas/GridCanvas";
 
 export function EditorPage() {
   const { id } = useParams();
+  const navigate = useNavigate(); 
 
   const [pattern, setPattern] = useState<Pattern | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  async function handleDeletePattern(patternId: number) {
+    const confirmed = window.confirm("Er du sikker på at du vil slette mønsteret? Det kan ikke gjøres om.");
+
+    if (!confirmed) {
+      return; 
+    }
+
+    await deletePatternById(patternId); 
+    navigate("/");
+  }
 
   useEffect(() => {
     if (id === undefined) {
@@ -16,12 +28,12 @@ export function EditorPage() {
       return;
     }
 
-    async function loadPattern(patternId: string) {
+    async function loadPattern(patternId: number) {
       const data = await getPatternById(patternId);
       setPattern(data);
       setIsLoading(false);
     }
-    loadPattern(id);
+    loadPattern(Number(id));
   }, [id]);
 
   if (isLoading) {
@@ -42,6 +54,7 @@ export function EditorPage() {
         knittingMode={pattern.knittingMode}
         initialGrid={pattern.grid}
       />
+      <button onClick={() => handleDeletePattern(pattern.id)}>Slett mønster</button>
     </div>
   );
 }
