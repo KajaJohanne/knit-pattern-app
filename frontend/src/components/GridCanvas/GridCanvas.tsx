@@ -10,7 +10,7 @@ type GridCanvasProps = {
   name: string;
   knittingMode: KnittingMode;
   initialGrid?: Cell[][];
-  patternId?: number; // Hvis denne finnes så redigeres eksisterende mønster 
+  patternId?: number; // Hvis denne finnes så redigeres eksisterende mønster
 };
 
 export function GridCanvas({
@@ -59,7 +59,10 @@ export function GridCanvas({
           return currentCell;
         }
 
-        return { color: selectedColor };
+        const isAlreadyCelectedColor = currentCell.color === selectedColor;
+        const newColor = isAlreadyCelectedColor ? "#1a1a2e" : selectedColor;
+
+        return { color: newColor };
       });
     });
 
@@ -71,17 +74,24 @@ export function GridCanvas({
 
     try {
       if (patternId !== undefined) {
-        await updatePatternById(patternId, { name, rows, columns, grid, knittedRows: Array(rows).fill(false), knittingMode});
+        await updatePatternById(patternId, {
+          name,
+          rows,
+          columns,
+          grid,
+          knittedRows: Array(rows).fill(false),
+          knittingMode,
+        });
       } else {
-      await savePattern({
-        name,
-        rows,
-        columns,
-        grid,
-        knittedRows: Array(rows).fill(false),
-        knittingMode,
-      });
-    }
+        await savePattern({
+          name,
+          rows,
+          columns,
+          grid,
+          knittedRows: Array(rows).fill(false),
+          knittingMode,
+        });
+      }
       alert("Yay! Mønsteret er lagret:)");
     } catch (error) {
       alert("Oida, noe gikk galt under lagring");
