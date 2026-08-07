@@ -6,7 +6,7 @@ export type Cell = {
 }; 
 
 export type Pattern = { 
-    id: string; 
+    id: number; 
     name: string; 
     rows: number; 
     columns: number;

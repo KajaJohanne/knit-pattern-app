@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import type { Cell, KnittingMode, Pattern } from "../types/pattern";
+import type { Cell, KnittingMode } from "../types/pattern";
 
 const API_URL = "http://localhost:3000";
 
@@ -24,7 +24,12 @@ export async function getPatterns() {
   return response.data;
 }
 
-export async function getPatternById(id: string) {
-    const response = await axios.get(`${API_URL}/patterns/${id}`); 
-    return response.data; 
+export async function getPatternById(id: number) {
+  const response = await axios.get(`${API_URL}/patterns/${id}`);
+  return response.data;
+}
+
+export async function deletePatternById(id: number) {
+  const response = await axios.delete(`${API_URL}/patterns/${id}`);
+  return response.data;
 }
