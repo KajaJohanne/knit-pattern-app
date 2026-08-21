@@ -28,6 +28,8 @@ export function GridCanvas({
   const [selectedColor, setSelectedColor] = useState("#ff6b6b");
   const [isSaving, setIsSaving] = useState(false);
 
+  const [isEditable, setIsEditable] = useState(patternId === undefined);
+
   const [isDrawing, setIsDrawing] = useState(false);
   const [tool, setTool] = useState("pen");
   const [history, setHistory] = useState([]);
@@ -49,6 +51,10 @@ export function GridCanvas({
   }
 
   function handleCellClick(clickedRowIndex: number, clickecColIndex: number) {
+    if (!isEditable) {
+      return;
+    }
+
     const newGrid = grid.map((currentRow, rowIndex) => {
       if (rowIndex !== clickedRowIndex) {
         return currentRow;
@@ -93,6 +99,7 @@ export function GridCanvas({
         });
       }
       alert("Yay! Mønsteret er lagret:)");
+      setIsEditable(false);
     } catch (error) {
       alert("Oida, noe gikk galt under lagring");
     } finally {
@@ -108,10 +115,15 @@ export function GridCanvas({
       <button onClick={handleSave} disabled={isSaving}>
         {isSaving ? "Lagrer..." : "Lagre mønster"}
       </button>
-      <ColorPicker
-        selectedColor={selectedColor}
-        onSelectColor={setSelectedColor}
-      />
+      {!isEditable && (
+        <button onClick={() => setIsEditable(true)}>Rediger mønster</button>
+      )}
+      {isEditable && (
+        <ColorPicker
+          selectedColor={selectedColor}
+          onSelectColor={setSelectedColor}
+        />
+      )}
 
       <div className="pixelCanvas">
         {grid.map((row, rowIndex) => (
