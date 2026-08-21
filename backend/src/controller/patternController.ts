@@ -46,3 +46,34 @@ export const getPatternById = async (req: Request, res: Response) => {
     res.status(404).json({ msg: message });
   }
 };
+
+export const deletePattern = async (req: Request, res: Response) => {
+  try {
+    const response = await prisma.pattern.delete({
+      where: {
+        id: Number(req.params.id),
+      },
+    });
+    res.status(200).json(response);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Ukjent feil";
+    res.status(404).json({ msg: message });
+  }
+};
+
+export const updatePattern = async (req: Request, res: Response) => {
+  const { name, rows, columns, grid, knittedRows, knittingMode } = req.body;
+
+  try {
+    const pattern = await prisma.pattern.update({
+      where: {
+        id: Number(req.params.id),
+      },
+      data: { name, rows, columns, grid, knittedRows, knittingMode },
+    });
+    res.status(200).json(pattern);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Ukejnt feil";
+    res.status(404).json({ msg: message });
+  }
+};
