@@ -55,6 +55,7 @@ export function EditorPage() {
         name={pattern.name}
         knittingMode={pattern.knittingMode}
         initialGrid={pattern.grid}
+        initialKnittedRows={pattern.knittedRows}
         patternId={pattern.id}
       />
       <button onClick={() => handleDeletePattern(pattern.id)}>

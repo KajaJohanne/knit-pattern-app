@@ -10,6 +10,7 @@ type GridCanvasProps = {
   name: string;
   knittingMode: KnittingMode;
   initialGrid?: Cell[][];
+  initialKnittedRows?: boolean[];
   patternId?: number; // Hvis denne finnes så redigeres eksisterende mønster
 };
 
@@ -19,10 +20,15 @@ export function GridCanvas({
   name,
   knittingMode,
   initialGrid,
+  initialKnittedRows,
   patternId,
 }: GridCanvasProps) {
   const [grid, setGrid] = useState<Cell[][]>(
     () => initialGrid ?? createEmptyGrid(rows, columns),
+  );
+
+  const [knittedRows, setKnittedRows] = useState<boolean[]>(
+    () => initialKnittedRows ?? Array(rows).fill(false),
   );
 
   const [selectedColor, setSelectedColor] = useState("#ff6b6b");
@@ -107,10 +113,33 @@ export function GridCanvas({
     }
   }
 
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null); 
+
+  function toggleRowKnitted(rowIndex: number) {
+    const newKnittedRows = knittedRows.map((isKnitted, index) =>
+      index === rowIndex ? !isKnitted : isKnitted,
+    );
+    setKnittedRows(newKnittedRows);
+
+    if (patternId === undefined) return; 
+
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+
+    saveTimeoutRef.current = setTimeout(() => {
+      updatePatternById(patternId, {
+        name, rows, columns, grid, knittedRows: newKnittedRows, knittingMode,
+      });
+    }, 1000); 
+  }
+
+  function getRowSide(rowIndex: number): "RS" | "VS" {
+    return rowIndex % 2 === 0 ? "VS" : "RS";
+  }
+
   return (
     <div>
-      <p>Tegn i vei!</p>
-
       <button onClick={handleClearGrid}>Slett innhold</button>
       <button onClick={handleSave} disabled={isSaving}>
         {isSaving ? "Lagrer..." : "Lagre mønster"}
@@ -127,15 +156,32 @@ export function GridCanvas({
 
       <div className="pixelCanvas">
         {grid.map((row, rowIndex) => (
-          <div key={rowIndex} className="pixelRow">
-            {row.map((cell, colIndex) => (
-              <div
-                key={colIndex}
-                className="pixelCell"
-                style={{ background: cell.color }}
-                onClick={() => handleCellClick(rowIndex, colIndex)}
-              />
-            ))}
+          <div
+            key={rowIndex}
+            className={`pixelRow ${knittedRows[rowIndex] ? "knitted" : ""}`}
+            onClick={() => !isEditable && toggleRowKnitted(rowIndex)}
+          >
+            
+            <div
+              className="rowCells"
+              style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
+            >
+              {row.map((cell, colIndex) => (
+                <div
+                  key={colIndex}
+                  className="pixelCell"
+                  style={{ background: cell.color }}
+                  onClick={() => handleCellClick(rowIndex, colIndex)}
+                />
+                
+              ))}
+              
+            </div>
+            {knittingMode === "flat" && (
+              <span className="rowSideLabel">
+                {getRowSide(rowIndex) === "RS" ? "<- RS" : "-> VS"}
+              </span>
+            )}
           </div>
         ))}
       </div>
