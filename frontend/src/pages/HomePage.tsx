@@ -20,7 +20,9 @@ export function HomePage() {
 
   return (
     <div>
-      <h1>Dette er landingssiden. Her skal tidligere mønstre vises</h1>
+      <h1 className="text-3xl font-bold text-espresso bg-blush p-4">
+        Dette er landingssiden. Her skal tidligere mønstre vises
+      </h1>
       <p>:)</p>
 
       {isLoading && <p>Laster..</p>}
