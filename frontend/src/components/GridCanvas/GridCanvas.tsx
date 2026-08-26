@@ -113,7 +113,7 @@ export function GridCanvas({
     }
   }
 
-  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null); 
+  const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function toggleRowKnitted(rowIndex: number) {
     const newKnittedRows = knittedRows.map((isKnitted, index) =>
@@ -121,7 +121,7 @@ export function GridCanvas({
     );
     setKnittedRows(newKnittedRows);
 
-    if (patternId === undefined) return; 
+    if (patternId === undefined) return;
 
     if (saveTimeoutRef.current) {
       clearTimeout(saveTimeoutRef.current);
@@ -129,13 +129,14 @@ export function GridCanvas({
 
     saveTimeoutRef.current = setTimeout(() => {
       updatePatternById(patternId, {
-        name, rows, columns, grid, knittedRows: newKnittedRows, knittingMode,
+        name,
+        rows,
+        columns,
+        grid,
+        knittedRows: newKnittedRows,
+        knittingMode,
       });
-    }, 1000); 
-  }
-
-  function getRowSide(rowIndex: number): "RS" | "VS" {
-    return rowIndex % 2 === 0 ? "VS" : "RS";
+    }, 1000);
   }
 
   return (
@@ -161,7 +162,6 @@ export function GridCanvas({
             className={`pixelRow ${knittedRows[rowIndex] ? "knitted" : ""}`}
             onClick={() => !isEditable && toggleRowKnitted(rowIndex)}
           >
-            
             <div
               className="rowCells"
               style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
@@ -173,15 +173,8 @@ export function GridCanvas({
                   style={{ background: cell.color }}
                   onClick={() => handleCellClick(rowIndex, colIndex)}
                 />
-                
               ))}
-              
             </div>
-            {knittingMode === "flat" && (
-              <span className="rowSideLabel">
-                {getRowSide(rowIndex) === "RS" ? "<- RS" : "-> VS"}
-              </span>
-            )}
           </div>
         ))}
       </div>

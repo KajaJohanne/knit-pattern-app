@@ -1,19 +1,13 @@
 .pixelCanvas {
   display: flex;
   flex-direction: column;
-  gap: 0px; 
+  gap: 0px;
 }
 
 .pixelRow {
   display: flex;
   align-items: center;
   cursor: pointer;
-}
-
-.rowSideLabel {
-  font-size: 0.75rem;
-  min-width: 3rem;
-  flex-shrink: 0;
 }
 
 .rowCells {
