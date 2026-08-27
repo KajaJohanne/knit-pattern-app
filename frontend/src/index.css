@@ -114,7 +114,12 @@ code {
 
 @theme {
   --color-blush: #fad6e1;
-  --color-cream: #f5ede4;
-  --color-espresso: #4f2b1f;
+  --color-blush-light: #fdf0f4;
+  --color-cream: #fdfaeb;
+  --color-charcoal: #474339;
+  --color-espresso: #413021;
+  --color-cream-light: #fffdf9;
   --color-accent: #e8a5bc;
+  --color-background-blue: #BECCE8;
+  --font-heading: "Comfortaa", sans-serif; 
 }
