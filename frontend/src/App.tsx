@@ -7,16 +7,13 @@ import { EditorPage } from "./pages/EditorPage";
 function App() {
   return (
     <BrowserRouter>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/new">Nytt mønster</Link>
-      </nav>
-
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/new" element={<NewPatternPage />} />
-        <Route path="/pattern/:id" element={<EditorPage />} />
-      </Routes>
+      <div className="min-h-screen">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/new" element={<NewPatternPage />} />
+          <Route path="/pattern/:id" element={<EditorPage />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }

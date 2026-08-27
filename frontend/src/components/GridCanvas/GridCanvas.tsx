@@ -48,7 +48,7 @@ export function GridCanvas({
       .map(() =>
         Array(columns)
           .fill(null)
-          .map(() => ({ color: "#1a1a2e" })),
+          .map(() => ({ color: "#fffdf9" })),
       );
   }
 
@@ -72,7 +72,7 @@ export function GridCanvas({
         }
 
         const isAlreadyCelectedColor = currentCell.color === selectedColor;
-        const newColor = isAlreadyCelectedColor ? "#1a1a2e" : selectedColor;
+        const newColor = isAlreadyCelectedColor ? "#fffdf9" : selectedColor;
 
         return { color: newColor };
       });
