@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import type { Cell, KnittingMode } from "../../types/pattern";
-import "./GridCanvas.css";
+
 import { ColorPicker } from "../ColorPicker/ColorPicker";
 import { savePattern, updatePatternById } from "../../api/patterns";
+import { Button } from "../Button";
 
 type GridCanvasProps = {
   rows: number;
@@ -140,43 +141,58 @@ export function GridCanvas({
   }
 
   return (
-    <div>
-      <button onClick={handleClearGrid}>Slett innhold</button>
-      <button onClick={handleSave} disabled={isSaving}>
-        {isSaving ? "Lagrer..." : "Lagre mønster"}
-      </button>
-      {!isEditable && (
-        <button onClick={() => setIsEditable(true)}>Rediger mønster</button>
-      )}
-      {isEditable && (
-        <ColorPicker
-          selectedColor={selectedColor}
-          onSelectColor={setSelectedColor}
-        />
-      )}
+    <div className="flex flex-col gap-6  mx-auto">
+      <div className="flex flex-wrap gap-3">
+        {isEditable && (
+          <Button variant="secondary" onClick={handleClearGrid}>
+            Tøm rutenett
+          </Button>
+        )}
+        <Button onClick={handleSave} disabled={isSaving}>
+          {isSaving ? "Lagrer.." : "Lagre mønster"}
+        </Button>
+        {!isEditable && (
+          <Button variant="secondary" onClick={() => setIsEditable(true)}>
+            Rediger mønster
+          </Button>
+        )}
+      </div>
 
-      <div className="pixelCanvas">
-        {grid.map((row, rowIndex) => (
-          <div
-            key={rowIndex}
-            className={`pixelRow ${knittedRows[rowIndex] ? "knitted" : ""}`}
-            onClick={() => !isEditable && toggleRowKnitted(rowIndex)}
-          >
-            <div
-              className="rowCells"
-              style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
-            >
-              {row.map((cell, colIndex) => (
-                <div
-                  key={colIndex}
-                  className="pixelCell"
-                  style={{ background: cell.color }}
-                  onClick={() => handleCellClick(rowIndex, colIndex)}
-                />
-              ))}
-            </div>
+      <div className="flex flex-col lg:flex-row gap-6 bg-background-blue/30 p-3 rounded-lg ">
+        {isEditable && (
+          <div className="lg:w-32 flex-shrink-0">
+            <ColorPicker
+              selectedColor={selectedColor}
+              onSelectColor={setSelectedColor}
+            />
           </div>
-        ))}
+        )}
+
+        <div className="flex-1 overflow-x-auto">
+          <div className="flex flex-col">
+            {grid.map((row, rowIndex) => (
+              <div
+                key={rowIndex}
+                className="flex items-center cursor-pointer"
+                onClick={() => !isEditable && toggleRowKnitted(rowIndex)}
+              >
+                <div
+                  className={`grid gap-px flex-1 max-w-[500px] ${knittedRows[rowIndex] ? "opacity-35" : ""}`}
+                  style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
+                >
+                  {row.map((cell, colIndex) => (
+                    <div
+                      key={colIndex}
+                      className="aspect-square cursor-pointer border border-charcoal/30 "
+                      style={{ background: cell.color }}
+                      onClick={() => handleCellClick(rowIndex, colIndex)}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

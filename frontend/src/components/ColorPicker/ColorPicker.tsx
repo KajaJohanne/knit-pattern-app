@@ -33,17 +33,22 @@ export function ColorPicker({
   ];
 
   return (
-    <div>
-      <h1>Her skal man kunne velge farge</h1>
-      {colors.map((color, index) => (
-        <div
-          key={index}
-          className={`color-item ${selectedColor === color ? "active" : ""}`}
-          style={{ background: color }}
-          onClick={() => onSelectColor(color)}
-          title={color}
-        />
-      ))}
+    <div className="bg-background-blue/30 p-3 rounded-lg">
+      <div className="grid grid-cols-5 sm:grid-cols-8 lg:grid-cols-2 gap-2">
+        {colors.map((color, index) => (
+          <div
+            key={index}
+            className={`h-6 w-12 rounded-lg cursor-pointer border-2 transition-transform hover:scale-105 color-item ${
+              selectedColor === color
+                ? "border-background-blue scale-105"
+                : "border-background-blue/20"
+            }`}
+            style={{ background: color }}
+            onClick={() => onSelectColor(color)}
+            title={color}
+          />
+        ))}
+      </div>
     </div>
   );
 }
