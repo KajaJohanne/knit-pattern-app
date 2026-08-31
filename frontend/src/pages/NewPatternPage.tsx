@@ -129,7 +129,7 @@ export function NewPatternPage() {
     <div>
       <Navigation />
       <section className="bg-cream-light min-h-screen py-12 px-8">
-        <div className="max-w-8xl mx-auto">
+        <div className="flex flex-col items-center">
           <h1 className="font-heading font-bold text-2xl text-espresso uppercase mb-2">
             {patternConfig.name}
           </h1>

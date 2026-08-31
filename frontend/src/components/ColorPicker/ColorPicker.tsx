@@ -1,5 +1,3 @@
-import "./ColorPicker.css";
-
 type ColorPickerProps = {
   selectedColor: string;
   onSelectColor: (color: string) => void;

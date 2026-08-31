@@ -4,6 +4,7 @@ import { getPatternById, deletePatternById } from "../api/patterns";
 import type { Pattern } from "../types/pattern";
 import { GridCanvas } from "../components/GridCanvas/GridCanvas";
 import { Navigation } from "../components/Navigation/Navigation";
+import { Button } from "../components/Button";
 
 export function EditorPage() {
   const { id } = useParams();
@@ -40,33 +41,56 @@ export function EditorPage() {
   }, [id]);
 
   if (isLoading) {
-    return <p>Laster...</p>;
+    return (
+      <div>
+        <Navigation />
+        <section className="bg-cream-light min-h-screen py-12 px-8 flex items-center justify-center">
+          <p className="font-heading text-charcoal uppercase">Laster...</p>
+        </section>
+      </div>
+    );
   }
 
   if (pattern === null) {
-    return <p>Fant ikke mønsteret:(</p>;
+    return (
+      <div>
+        <Navigation />
+        <section className="bg-cream-light min-h-screen py-12 px-8 flex items-center justify-center">
+          <p className="font-heading text-charcoal uppercase">
+            Fant ikke mønsteret:(
+          </p>
+        </section>
+      </div>
+    );
   }
 
   return (
     <div>
       <Navigation />
       <section className="bg-cream-light min-h-screen py-12 px-8">
-        
-        <h1 className="font-heading font-bold text-2xl text-espresso uppercase mb-2">
+        <div className="max-w-4xl mx-auto w-full flex flex-col items-center gap-6">
+          <h1 className="font-heading font-bold text-2xl text-espresso uppercase mb-2">
             {pattern.name}
           </h1>
-        <GridCanvas
-          rows={pattern.rows}
-          columns={pattern.columns}
-          name={pattern.name}
-          knittingMode={pattern.knittingMode}
-          initialGrid={pattern.grid}
-          initialKnittedRows={pattern.knittedRows}
-          patternId={pattern.id}
-        />
-        <button onClick={() => handleDeletePattern(pattern.id)}>
-          Slett mønster
-        </button>
+
+          <GridCanvas
+            rows={pattern.rows}
+            columns={pattern.columns}
+            name={pattern.name}
+            knittingMode={pattern.knittingMode}
+            initialGrid={pattern.grid}
+            initialKnittedRows={pattern.knittedRows}
+            patternId={pattern.id}
+          />
+
+
+          <Button
+            variant="danger"
+            onClick={() => handleDeletePattern(pattern.id)}
+          >
+            Slett mønster
+          </Button>
+        </div>
       </section>
 
       <section className="py-12 px-8 md:px-16 w-full mx-auto bg-background-blue">
