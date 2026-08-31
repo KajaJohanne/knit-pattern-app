@@ -141,16 +141,18 @@ export function GridCanvas({
   }
 
   return (
-    <div className="flex flex-col gap-6  mx-auto">
+    <div className="flex flex-col gap-6 items-center w-full">
       <div className="flex flex-wrap gap-3">
         {isEditable && (
           <Button variant="secondary" onClick={handleClearGrid}>
             Tøm rutenett
           </Button>
         )}
-        <Button onClick={handleSave} disabled={isSaving}>
-          {isSaving ? "Lagrer.." : "Lagre mønster"}
-        </Button>
+        {isEditable && (
+          <Button onClick={handleSave} disabled={isSaving}>
+            {isSaving ? "Lagrer.." : "Lagre mønster"}
+          </Button>
+        )}
         {!isEditable && (
           <Button variant="secondary" onClick={() => setIsEditable(true)}>
             Rediger mønster
@@ -177,8 +179,11 @@ export function GridCanvas({
                 onClick={() => !isEditable && toggleRowKnitted(rowIndex)}
               >
                 <div
-                  className={`grid gap-px flex-1 max-w-[500px] ${knittedRows[rowIndex] ? "opacity-35" : ""}`}
-                  style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
+                  className={`grid gap-px ${knittedRows[rowIndex] ? "opacity-35" : ""}`}
+                  style={{
+                    gridTemplateColumns: `repeat(${columns}, 1fr)`,
+                    width: `${Math.min(columns * 20, 800)}px`,
+                  }}
                 >
                   {row.map((cell, colIndex) => (
                     <div
