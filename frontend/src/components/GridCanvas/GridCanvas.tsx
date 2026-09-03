@@ -4,6 +4,7 @@ import type { Cell, KnittingMode } from "../../types/pattern";
 import { ColorPicker } from "../ColorPicker/ColorPicker";
 import { savePattern, updatePatternById } from "../../api/patterns";
 import { Button } from "../Button";
+import { toast } from "sonner";
 
 type GridCanvasProps = {
   rows: number;
@@ -135,10 +136,10 @@ export function GridCanvas({
           knittingMode,
         });
       }
-      alert("Yay! Mønsteret er lagret:)");
+      toast.success("Mønsteret er lagret!");
       setIsEditable(false);
     } catch (error) {
-      alert("Oida, noe gikk galt under lagring");
+      toast.error("Noe gikk galt under lagring");
     } finally {
       setIsSaving(false);
     }
