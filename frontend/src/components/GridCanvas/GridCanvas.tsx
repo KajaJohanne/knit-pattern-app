@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Cell, KnittingMode } from "../../types/pattern";
 
 import { ColorPicker } from "../ColorPicker/ColorPicker";
@@ -38,10 +38,10 @@ export function GridCanvas({
   const [isEditable, setIsEditable] = useState(patternId === undefined);
 
   const [isDrawing, setIsDrawing] = useState(false);
-  const [tool, setTool] = useState("pen");
+  //const [tool, setTool] = useState("pen");
   const [history, setHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
-  const canvasRef = useRef(null);
+  //const canvasRef = useRef(null);
 
   function createEmptyGrid(rows: number, columns: number): Cell[][] {
     return Array(rows)
@@ -57,6 +57,7 @@ export function GridCanvas({
     setGrid(createEmptyGrid(rows, columns));
   }
 
+  /*
   function handleCellClick(clickedRowIndex: number, clickecColIndex: number) {
     if (!isEditable) {
       return;
@@ -79,6 +80,35 @@ export function GridCanvas({
       });
     });
 
+    setGrid(newGrid);
+  }
+    */
+
+  const handleMouseDown = (rowIndex: number, colIndex: number) => {
+    if (!isEditable) return;
+
+    setIsDrawing(true);
+    paintCell(rowIndex, colIndex);
+  };
+
+  const handleMouseEnter = (rowIndex: number, colIndex: number) => {
+    if (!isEditable || !isDrawing) return;
+
+    paintCell(rowIndex, colIndex);
+  };
+
+  const handleMouseUp = () => {
+    setIsDrawing(false);
+  };
+
+  function paintCell(clickedRowIndex: number, clickedColIndex: number) {
+    const newGrid = grid.map((currentRow, rowIndex) => {
+      if (rowIndex !== clickedRowIndex) return currentRow;
+      return currentRow.map((currentCell, colIndex) => {
+        if (colIndex !== clickedColIndex) return currentCell;
+        return { color: selectedColor };
+      });
+    });
     setGrid(newGrid);
   }
 
@@ -141,7 +171,10 @@ export function GridCanvas({
   }
 
   return (
-    <div className="flex flex-col gap-6 items-center w-full">
+    <div
+      className="flex flex-col gap-6 items-center w-full"
+      onMouseUp={handleMouseUp}
+    >
       <div className="flex flex-wrap gap-3">
         {isEditable && (
           <Button variant="secondary" onClick={handleClearGrid}>
@@ -190,7 +223,9 @@ export function GridCanvas({
                       key={colIndex}
                       className="aspect-square cursor-pointer border border-charcoal/30 "
                       style={{ background: cell.color }}
-                      onClick={() => handleCellClick(rowIndex, colIndex)}
+                      //onClick={() => handleCellClick(rowIndex, colIndex)}
+                      onMouseDown={() => handleMouseDown(rowIndex, colIndex)}
+                      onMouseEnter={() => handleMouseEnter(rowIndex, colIndex)}
                     />
                   ))}
                 </div>
