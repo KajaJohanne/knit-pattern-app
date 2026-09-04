@@ -3,6 +3,7 @@ export type KnittingMode = 'flat' | 'round';
 
 export type Cell = {
     color: string; 
+    blocked?: boolean; 
 }; 
 
 export type Pattern = { 
