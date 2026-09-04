@@ -12,6 +12,8 @@ type NewPatternData = {
   grid: Cell[][];
   knittedRows: boolean[];
   knittingMode: KnittingMode;
+  thumbGrid?: Cell[][]; 
+  thumbKnittedRows?: boolean[]; 
 };
 
 export async function savePattern(pattern: NewPatternData) {
