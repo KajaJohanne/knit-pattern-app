@@ -1,5 +1,6 @@
 import {
   generateMittenSmallGrid,
+  generateMittenSmallThumbGrid,
   mittenSmallColumns,
   mittenSmallRows,
   mittenSmallThumbColumns,
@@ -10,10 +11,11 @@ export const templates = {
   "mitten-small": {
     name: "Vott (small)",
     rows: mittenSmallRows,
-    colums: mittenSmallColumns,
+    columns: mittenSmallColumns,
     thumbRows: mittenSmallThumbRows,
     thumbColumns: mittenSmallThumbColumns,
     generateGrid: generateMittenSmallGrid,
+    generateThumbGrid: generateMittenSmallThumbGrid,
   },
 };
 

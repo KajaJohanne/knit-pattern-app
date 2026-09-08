@@ -80,9 +80,10 @@ export function EditorPage() {
             knittingMode={pattern.knittingMode}
             initialGrid={pattern.grid}
             initialKnittedRows={pattern.knittedRows}
+            initialThumbGrid={pattern.thumbGrid}
+            initialThumbKnittedRows={pattern.thumbKnittedRows}
             patternId={pattern.id}
           />
-
 
           <Button
             variant="danger"
