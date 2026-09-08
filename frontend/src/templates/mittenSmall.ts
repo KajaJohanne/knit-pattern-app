@@ -39,9 +39,9 @@ const SECTION_D_END = 51;
 
 // Utskjæring til tommel i vottediagrammet
 const THUMB_OPENING_ROW_START = 38;
-const THUMB_OPENING_ROW_END = 50;
-const THUMB_OPENING_COL_START = SECTION_D_START + 2;
-const THUMB_OPENING_COL_END = SECTION_D_START + 4;
+const THUMB_OPENING_ROW_END = 51;
+const THUMB_OPENING_COL_START = SECTION_D_START + 1;
+const THUMB_OPENING_COL_END = SECTION_D_START + 3;
 
 // Seksjoner i tommeldiagrammet
 const THUMB_ZONE1_START = 0;
