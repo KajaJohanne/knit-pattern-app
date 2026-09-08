@@ -113,40 +113,42 @@ export function NewPatternPage() {
                   onChange={(e) => setRows(e.target.value)}
                   className="font-heading border-2 border-background-blue rounded-full py-2 px-5 focus:outline-none focus:border-espresso"
                 />
-                
-                  <label
-                    htmlFor="colums"
-                    className="font-heading font-bold uppercase text-sm text-charcoal"
-                  >
-                    Antall kolonner
-                  </label>
-                  <input
-                    id="columns"
-                    type="number"
-                    min={1}
-                    max={200}
-                    value={columns}
-                    onChange={(e) => setColums(e.target.value)}
-                    className="font-heading border-2 border-background-blue rounded-full py-2 px-5 focus:outline-none focus:border-espresso flex-1"
-                  />
+
+                <label
+                  htmlFor="colums"
+                  className="font-heading font-bold uppercase text-sm text-charcoal"
+                >
+                  Antall kolonner
+                </label>
+                <input
+                  id="columns"
+                  type="number"
+                  min={1}
+                  max={200}
+                  value={columns}
+                  onChange={(e) => setColums(e.target.value)}
+                  className="font-heading border-2 border-background-blue rounded-full py-2 px-5 focus:outline-none focus:border-espresso flex-1"
+                />
+
+                <label
+                  htmlFor="mode"
+                  className="font-heading font-bold uppercase text-sm text-charcoal"
+                >
+                  Frem og tilbake eller rundstrikk?
+                </label>
+                <select
+                  id="mode"
+                  value={knittingMode}
+                  onChange={(e) =>
+                    setKnittingMode(e.target.value as KnittingMode)
+                  }
+                  className="font-heading border-2 border-background-blue rounded-full py-2 px-5 focus:outline-none focus:border-espresso uppercase"
+                >
+                  <option value="flat">Frem og tilbake</option>
+                  <option value="round">Rundstrikk</option>
+                </select>
               </>
             )}
-
-            <label
-              htmlFor="mode"
-              className="font-heading font-bold uppercase text-sm text-charcoal"
-            >
-              Frem og tilbake eller rundstrikk?
-            </label>
-            <select
-              id="mode"
-              value={knittingMode}
-              onChange={(e) => setKnittingMode(e.target.value as KnittingMode)}
-              className="font-heading border-2 border-background-blue rounded-full py-2 px-5 focus:outline-none focus:border-espresso uppercase"
-            >
-              <option value="flat">Frem og tilbake</option>
-              <option value="round">Rundstrikk</option>
-            </select>
 
             <Button type="submit" className="col-span-2 mt-2">
               Opprett
