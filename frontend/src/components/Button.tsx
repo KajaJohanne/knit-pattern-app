@@ -10,7 +10,7 @@ export function Button({
   ...rest
 }: ButtonProps) {
   const baseStyles =
-    "font-heading font-bold uppercase rounded-full py-2 px-5 tranition-all  hover:opacity-60 diabled:opacity-50 disabled:hover:scale-100";
+    "font-heading font-bold uppercase rounded-full py-2 px-5 transition-all  hover:opacity-60 disabled:opacity-50 disabled:hover:scale-100";
 
   const variantStyles = {
     primary: "bg-espresso text-cream-light",

@@ -9,9 +9,9 @@ export const mittenSmallThumbRows = 34;
 export const mittenSmallThumbColumns = 22;
 
 // Farger for å forklare økinger og fellinger i diagrammet
-export const SIGNAL_RED = "#ff0000"; //strikk 2 rett sammen
-export const SIGNAL_GREEN = "#00ff00"; //1 løs av, strikk 1, løft over
-export const SIGNAL_BLUE = "#0066ff"; // 1 løs av, strikk 2 sammen, løft over
+export const SIGNAL_RED = "rgba(255, 0, 0, 0.7)"; //strikk 2 rett sammen
+export const SIGNAL_GREEN = "rgba(0, 255, 0, 0.7)"; //1 løs av, strikk 1, løft over
+export const SIGNAL_BLUE = "rgba(0, 0, 255, 0.7)"; // 1 løs av, strikk 2 sammen, løft over
 export const BLOCKED = "#e0e0e0";
 
 const TAPER_ROWS = 11; // til spissen på vott
@@ -233,15 +233,14 @@ function getMittenThumbCellState(row: number, col: number): MittenCellState {
     }
 
     if (rowFromBottom < 10) {
-        let activeWidth: number; 
-        if (rowFromBottom === 0) {
-            activeWidth = 3; 
-        } else {
-            const growthStep = Math.ceil(rowFromBottom / 2);
-            activeWidth = 3 + 2 * growthStep;
-        }
-      
-      
+      let activeWidth: number;
+      if (rowFromBottom === 0) {
+        activeWidth = 3;
+      } else {
+        const growthStep = Math.ceil(rowFromBottom / 2);
+        activeWidth = 3 + 2 * growthStep;
+      }
+
       const margin = (zoneWidth - activeWidth) / 2;
       const activeStart = THUMB_ZONE5_START + margin;
       const activeEnd = activeStart + activeWidth - 1;
