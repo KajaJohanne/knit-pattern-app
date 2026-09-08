@@ -4,7 +4,7 @@ import { prisma } from "../lib/prisma";
 import { Request, Response } from "express";
 
 export const createPattern = async (req: Request, res: Response) => {
-  const { name, rows, columns, grid, knittedRows, knittingMode } = req.body;
+  const { name, rows, columns, grid, knittedRows, knittingMode, thumbGrid, thumbKnittedRows } = req.body;
   try {
     const pattern = await prisma.pattern.create({
       data: {
@@ -14,6 +14,8 @@ export const createPattern = async (req: Request, res: Response) => {
         grid,
         knittedRows,
         knittingMode,
+        thumbGrid, 
+        thumbKnittedRows
       },
     });
     res.status(201).json(pattern);
@@ -62,14 +64,14 @@ export const deletePattern = async (req: Request, res: Response) => {
 };
 
 export const updatePattern = async (req: Request, res: Response) => {
-  const { name, rows, columns, grid, knittedRows, knittingMode } = req.body;
+  const { name, rows, columns, grid, knittedRows, knittingMode, thumbGrid, thumbKnittedRows } = req.body;
 
   try {
     const pattern = await prisma.pattern.update({
       where: {
         id: Number(req.params.id),
       },
-      data: { name, rows, columns, grid, knittedRows, knittingMode },
+      data: { name, rows, columns, grid, knittedRows, knittingMode, thumbGrid, thumbKnittedRows },
     });
     res.status(200).json(pattern);
   } catch (error) {

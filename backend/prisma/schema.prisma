@@ -21,4 +21,6 @@ model Pattern {
   knittedRows Json 
   knittingMode String
   createdAt DateTime @default(now()) 
+  thumbGrid Json?
+  thumbKnittedRows Json? 
 }
