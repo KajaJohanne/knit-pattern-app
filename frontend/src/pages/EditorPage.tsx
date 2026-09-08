@@ -68,7 +68,7 @@ export function EditorPage() {
     <div>
       <Navigation />
       <section className="bg-cream-light min-h-screen py-12 px-8">
-        <div className="max-w-4xl mx-auto w-full flex flex-col items-center gap-6">
+        <div className="mx-auto w-full flex flex-col items-center gap-6">
           <h1 className="font-heading font-bold text-2xl text-espresso uppercase mb-2">
             {pattern.name}
           </h1>
