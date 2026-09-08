@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { Cell, KnittingMode } from "../../types/pattern";
 
 import { ColorPicker } from "../ColorPicker/ColorPicker";
@@ -54,10 +54,6 @@ export function GridCanvas({
   const [isEditable, setIsEditable] = useState(patternId === undefined);
 
   const [isDrawing, setIsDrawing] = useState(false);
-  //const [tool, setTool] = useState("pen");
-  //const [history, setHistory] = useState([]);
-  //const [historyIndex, setHistoryIndex] = useState(-1);
-  //const canvasRef = useRef(null);
 
   function createEmptyGrid(rows: number, columns: number): Cell[][] {
     return Array(rows)
@@ -68,31 +64,6 @@ export function GridCanvas({
           .map(() => ({ color: "#fffdf9" })),
       );
   }
-
-  /*
-  function handleClearGrid() {
-    const clearedGrid = grid.map((row) =>
-      row.map((cell) => {
-        if (cell.blocked) {
-          return cell; //behold faste celler
-        }
-        return { color: "#fffdf9", blocked: false };
-      }),
-    );
-    setGrid(clearedGrid);
-
-    if (thumbGrid !== null) {
-      const clearedThumbGrid = thumbGrid.map((row) =>
-        row.map((cell) => {
-          if (cell.blocked) {
-            return cell;
-          }
-          return { color: "#fffdf9", blocked: false };
-        }),
-      );
-      setThumbGrid(clearedThumbGrid);
-    }
-  }*/
 
   function clearNonBlockedCells(sourceGrid: Cell[][]): Cell[][] {
     return sourceGrid.map((row) =>
@@ -111,33 +82,6 @@ export function GridCanvas({
       setThumbGrid(clearNonBlockedCells(thumbGrid));
     }
   }
-
-  /*
-  function handleCellClick(clickedRowIndex: number, clickecColIndex: number) {
-    if (!isEditable) {
-      return;
-    }
-
-    const newGrid = grid.map((currentRow, rowIndex) => {
-      if (rowIndex !== clickedRowIndex) {
-        return currentRow;
-      }
-
-      return currentRow.map((currentCell, colIndex) => {
-        if (colIndex !== clickecColIndex) {
-          return currentCell;
-        }
-
-        const isAlreadyCelectedColor = currentCell.color === selectedColor;
-        const newColor = isAlreadyCelectedColor ? "#fffdf9" : selectedColor;
-
-        return { color: newColor };
-      });
-    });
-
-    setGrid(newGrid);
-  }
-    */
 
   function handleMouseDownIn(
     targetGrid: Cell[][],
@@ -185,28 +129,6 @@ export function GridCanvas({
 
   async function handleSave() {
     setIsSaving(true);
-
-    /*
-    try {
-      if (patternId !== undefined) {
-        await updatePatternById(patternId, {
-          name,
-          rows,
-          columns,
-          grid,
-          knittedRows: Array(rows).fill(false),
-          knittingMode,
-        });
-      } else {
-        await savePattern({
-          name,
-          rows,
-          columns,
-          grid,
-          knittedRows: Array(rows).fill(false),
-          knittingMode,
-        });
-      }*/
 
     try {
       const patternData = {
