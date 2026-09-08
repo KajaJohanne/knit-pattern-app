@@ -22,6 +22,13 @@ export function ChartDescriptions() {
         />
         <span>1 maske løst av, strikk 2r sammen, løft den løse over</span>
       </div>
+      <div className="flex items-center gap-2">
+        <span
+          className="w-4 h-4 rounded-sm"
+          style={{ background: "#e0e0e0" }}
+        />
+        <span>Husk at når høyre vott strikkes, er tommelen på andre siden</span>
+      </div>
     </div>
   );
 }
